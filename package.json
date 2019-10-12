@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "lite-server",
     "test": "echo \"Error: no test specified\" && sexit 1",
-    "start": "node your-script.js"
+    "start": "node app.js"
   },
   "author": "#",
   "license": "ISC",
@@ -24,6 +24,8 @@
     "truffle-contract": "3.0.6"
   },
   "dependencies": {
-    "web3": "github:ethereum/web3.js"
+    "eth": "^4.0.1",
+    "web3": "^0.20.6",
+    "web3-eth": "^1.2.1"
   }
 }

@@ -2,23 +2,26 @@ pragma solidity ^0.5.0;
 
 contract Patient{
     uint public patientCount = 0;
-    struct PatientInfo{
-        string name;
-         uint age;
-        string gender;
-    }
-    mapping(uint=>PatientInfo) public patients;
-
-    constructor() public{
-        set("Sachin",20,"Male");
-    }
+    string name;
+    uint age;
+    string gender;
+    
+   modifier checkLevel(uint _age){
+       require(
+           _age>0,
+           "Invalid age"
+           );
+           _;
+   }
+    
     function set(string memory _name, uint _age, string memory _gender) public {
         patientCount++;
+        name = _name;
+        age = _age;
+        gender = _gender;
         // patients[msg.sender].name=_name;
-
-        patients[patientCount] = PatientInfo(_name,_age,_gender);
     }
-    function get() public view returns(uint){
-    return patientCount;
+    function get() public view returns(string memory, uint, string memory){
+    return (name, age, gender) ;
     }
 }
