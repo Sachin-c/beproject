@@ -5,7 +5,6 @@ contract Patient{
     string name;
     uint age;
     string gender;
-    
    modifier checkLevel(uint _age){
        require(
            _age>0,
@@ -13,7 +12,6 @@ contract Patient{
            );
            _;
    }
-    
     function set(string memory _name, uint _age, string memory _gender) public {
         patientCount++;
         name = _name;
