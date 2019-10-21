@@ -24,10 +24,5 @@
     "truffle-contract": "^3.0.6"
   },
   "dependencies": {
-    "eth": "^4.0.1",
-    "jquery": "^3.4.1",
-    "popper.js": "^1.16.0",
-    "web3": "^0.20.6",
-    "web3-eth": "^1.2.1"
   }
 }
