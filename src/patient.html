@@ -127,7 +127,7 @@
                           "type": "function"
                         }
                       ];
-                      const address='0x1334deDfE181C46B9F2182957f6259D8C3672c60'
+                      const address='0xF3dE656d5e5745BD62953665029062fFb0A2420A'
                       var Courses = new web3.eth.Contract(abi,address);
 
                       // console.log(Courses.methods.set("ab",1,"m","o")).send();
@@ -211,11 +211,33 @@
                           "type": "function"
                         }
                       ];
-                        var contractaddress = '0x1334deDfE181C46B9F2182957f6259D8C3672c60';
+                      if (typeof web3 !== undefined) 
+                      {
+                      web3 = new Web3(web3.currentProvider);
+                      } 
+                      else
+                      {
+                      web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+                      }
+                        var contractaddress = '0xF3dE656d5e5745BD62953665029062fFb0A2420A';
                         //instantiate and connect to contract address via Abi
                         var myFunction = new web3.eth.Contract(abi,contractaddress);
                         //call the set function of our SimpleStorage contract
-                        myFunction.methods.set((document.getElementById("form1").elements[0].value, document.getElementById("form1").elements[1].value,document.getElementById("form1").elements[2].value,document.getElementById("form1").elements[3].value), { from: web3.eth.accounts[0], gas: 3000000 }, function (error, result) {
+                        // console.log(myFunction.methods);
+                        const myFunc = async () => {
+                            try {
+                                const myAccounts = await web3.eth.getAccounts();
+                                console.log(myAccounts[0])
+                                return toString(myAccounts[0]);
+
+                            } catch (err) {
+                                console.log(err);
+                            }
+                        }
+
+                        // web3.defaultAccount=()
+                        // web3.eth.getAccounts().then( function (result) { return result[0] });
+                        myFunction.methods.set(document.getElementById("form1").elements[0].value,document.getElementById("form1").elements[1].value,document.getElementById("form1").elements[2].value,document.getElementById("form1").elements[3].value).send({from:"0x2823659f9FD99f95B44bc4C0A808eebcA069F690",gas: 3000000}, function (error, result) {
                         if (!error) {
                         console.log(result);
                         } else {
@@ -229,15 +251,10 @@
 
 
 
-
-
-
-
-
                      Courses.methods.get().call().then(function(number){
                       // console.log(number)
                       var result=number;
-                      document.getElementById("print").innerHTML=result[0]+"("+result[1]+" years old) is "+result[2];
+                      document.getElementById("print").innerHTML=result[0]+"("+result[1]+" years old) is "+result[2]+"with blood group "+result[3];
                      });
                       //web3.eth.defaultAccount=web3.eth.getAccounts().then( function (result) { return result[0] });
                       web3.eth.defaultAccount = web3.eth.accounts[0];
