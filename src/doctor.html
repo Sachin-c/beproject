@@ -7,12 +7,16 @@
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
             <script src="/node_modules/web3/dist/web3.min.js"></script>
-            
+            <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.37/dist/web3.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+            <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+      
         <title></title>
         <meta charset="utf-8" />
         
     </head>
     <body><h2 id="print"></h2>
+           <form id="form1"> 
             <p class="text-danger" id="error"></p>
             <!-- <form onSubmit="App.set(); return false;"></form> -->
                     <div class="form-group">
@@ -27,36 +31,320 @@
                         <label for="Gender">Gender</label>
                         <input type="text" class="form-control" id="gender" placeholder="Gender">
                     </div>
-                    <!-- <input type="submit" hidden=""> -->
-                    <button id="button" class="btn btn-primary">Submit</button> 
+                  </form>
+                    <button id="button" onclick="setvalue()" class="btn btn-primary">Submit</button> 
                   <!-- </form> -->
                   <script src=”https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
                   <script>
-                      if (typeof web3 !== undefined) 
-                      {
-                      web3 = new Web3(web3.currentProvider);
-                      } 
-                      else
-                      {
+                       function setvalue() {
+                        try { 
                       web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+                      var abi=[
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "i",
+				"type": "uint256"
+			}
+		],
+		"name": "getall",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_doctorCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "info",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "gender",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "get",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "doctorCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			}
+		],
+		"name": "set",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+];         
+                     var address='0xD427337b4e7eCf8F6D1F0380D00449543aD6C7d5';
+                     var myFunction = new web3.eth.Contract(abi,address);
+                     myFunction.methods.set(document.getElementById("form1").elements[0].value,document.getElementById("form1").elements[1].value,document.getElementById("form1").elements[2].value).send({from:'0x2823659f9FD99f95B44bc4C0A808eebcA069F690',gas: 3000000}, function (error, result) {
+                        if (!error) {
+                        console.log(result);
+                      } 
+                     else {
+                        console.log(error);
+                        }
+                        })
+                        } catch (err) {
+                        document.getElementById("print").innerHTML = err;
+                        }
                       }
-                      // web3.eth.defaultAccount = web3.eth.accounts[0];
-                      web3.eth.getAccounts().then( function (result) { return result[0] });
-                      var CoursesContract = web3.eth.contract([{ "constant": true, "inputs": [], "name": "doctorCount", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_name", "type": "string" }, { "name": "_age", "type": "uint256" }, { "name": "_gender", "type": "string" } ], "name": "set", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "get", "outputs": [ { "name": "", "type": "string" }, { "name": "", "type": "uint256" }, { "name": "", "type": "string" } ], "payable": false, "stateMutability": "view", "type": "function" } ]);
-                      var Courses = CoursesContract.at('0x2823659f9FD99f95B44bc4C0A808eebcA069F690');
+                      var abi=[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			}
+		],
+		"name": "set",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "doctorCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "get",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "i",
+				"type": "uint256"
+			}
+		],
+		"name": "getall",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_doctorCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "info",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "gender",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+                       var address='0xD427337b4e7eCf8F6D1F0380D00449543aD6C7d5';
+                     
+                        web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+                                        
+                      var Courses = new web3.eth.Contract(abi,address);
                       
-                      $('#button').click(function() {
-                    Courses.set($('#name').val(), $('#age').val(),$('#gender').val());
-                    });
+                      Courses.methods.get().call().then(function(number){
+                      console.log(number)
+                      var result=number;
+                      var total=result[4];
+                      document.getElementById("print").innerHTML=result[0]+"("+result[1]+" years old) is "+result[2];
+                     });
 
-                    Courses.get(function(error, result){
-                        if(!error){
-                          $('#print').html(result[1]+"("+result[2]+" years old) is "+result[3] );
-                          console.log(result);
-                          }
-                      else
-                        console.error(error);
-                      });
+          
                     </script>
     </body>
 </html>

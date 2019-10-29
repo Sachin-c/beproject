@@ -8,14 +8,14 @@
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
             <!-- <script src="node_modules/web3/dist/web3.min.js" type="text/javascript"></script>
             <script src="node_modules/truffle-contract/dist/truffle-contract.js" type="text/javascript"></script> -->
-            <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.37/dist/web3.min.js"></script>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
             <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
         <title></title>
         <meta charset="utf-8" />
         
     </head>
-    <body><h2 id="print"></h2>
+    <body><h4><table id="print"></h4><h2 id="amt"></h2>
       <form id="form1">
             <p class="text-danger" id="error"></p>
                     <div class="form-group">
@@ -35,117 +35,196 @@
                         <input type="text" class="form-control" id="bg" placeholder="Blood Group">
                     </div>
         </form>
-                    
                     <button id="button" onclick="setvalue()" class="btn btn-primary">Submit</button> 
                  
                   
                   <script type="text/javascript">
 
-function setvalue() {
-                        try {
-                          
-                            var abi=[{
-                                "constant": false,
-                                "inputs": [
-                                  {
-                                    "internalType": "string",
-                                    "name": "_name",
-                                    "type": "string"
-                                  },
-                                  {
-                                    "internalType": "uint256",
-                                    "name": "_age",
-                                    "type": "uint256"
-                                  },
-                                  {
-                                    "internalType": "string",
-                                    "name": "_gender",
-                                    "type": "string"
-                                  },
-                                  {
-                                    "internalType": "string",
-                                    "name": "_bg",
-                                    "type": "string"
-                                  }
-                                ],
-                                "name": "set",
-                                "outputs": [],
-                                "payable": false,
-                                "stateMutability": "nonpayable",
-                                "type": "function"
-                              },
-                              {
-                                "constant": true,
-                                "inputs": [],
-                                "name": "get",
-                                "outputs": [
-                                  {
-                                    "internalType": "string",
-                                    "name": "",
-                                    "type": "string"
-                                  },
-                                  {
-                                    "internalType": "uint256",
-                                    "name": "",
-                                    "type": "uint256"
-                                  },
-                                  {
-                                    "internalType": "string",
-                                    "name": "",
-                                    "type": "string"
-                                  },
-                                  {
-                                    "internalType": "string",
-                                    "name": "",
-                                    "type": "string"
-                                  }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                              },
-                              {
-                                "constant": true,
-                                "inputs": [],
-                                "name": "patientCount",
-                                "outputs": [
-                                  {
-                                    "internalType": "uint256",
-                                    "name": "",
-                                    "type": "uint256"
-                                  }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                              }
-                            ];
-                            var address='0xBb64c1467f4F2d470046E5d580ac835045D9fc44';
+                    function setvalue() {
+                        try { 
+                            var abi=[
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "i",
+				"type": "uint256"
+			}
+		],
+		"name": "getall",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_patientCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "info",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "bg",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "get",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			}
+		],
+		"name": "set",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "patientCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+                            var net_address='0xb495cA57289c0307635c4E83A97C795E82221a31';
 
-                            if (typeof web3 !== undefined) 
-                            {
-                              web3 = new Web3(web3.currentProvider);
-                            } 
-                            else
-                            {
-                              web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
-                          }
-                        // var contractaddress = '';
-                         console.log( web3.eth.defaultAccount)
-                        var myFunction = new web3.eth.Contract(abi,address);
+                            web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+                        var myFunction = new web3.eth.Contract(abi,net_address);
                         // console.log(web3.eth.getAccounts())
-
+                       
+                        // ((async () => {
+                        //     const value = await web3.eth.getAccounts();
+                        //     console.log(value);
+                        // })()).catch(console.error)
                         
-                        async function getCurrentAccount(){
-                          var currentAccounts = await web3.eth.getAccounts();
-                          console.log(currentAccounts);
-                          return currentAccounts[0];
-                      }
-                      a=currentAccounts;
+                         async function getAccount(){
+                         return web3.eth.getAccounts()[0];
+                        }
+                        // (async () => {t})();
+                       
+                        
                         // console.log(web3.eth.getAccounts().then( function (result) { return result[0] }));
-                        myFunction.methods.set(document.getElementById("form1").elements[0].value,document.getElementById("form1").elements[1].value,document.getElementById("form1").elements[2].value,document.getElementById("form1").elements[3].value).send({from:a ,gas: 3000000}, function (error, result) {
+                        myFunction.methods.set(document.getElementById("form1").elements[0].value,document.getElementById("form1").elements[1].value,document.getElementById("form1").elements[2].value,document.getElementById("form1").elements[3].value).send({from:'0x2823659f9FD99f95B44bc4C0A808eebcA069F690',gas: 3000000}, function (error, result) {
                         if (!error) {
                         console.log(result);
+                        window.location.href="patient_view.html"
+
+                        // window.location.href="patient_view.html";
                         } else {
                         console.log(error);
                         }
@@ -155,98 +234,194 @@ function setvalue() {
                         }
                         }
                   var abi=[
-                            {
-                              "constant": false,
-                              "inputs": [
-                                {
-                                  "internalType": "string",
-                                  "name": "_name",
-                                  "type": "string"
-                                },
-                                {
-                                  "internalType": "uint256",
-                                  "name": "_age",
-                                  "type": "uint256"
-                                },
-                                {
-                                  "internalType": "string",
-                                  "name": "_gender",
-                                  "type": "string"
-                                },
-                                {
-                                  "internalType": "string",
-                                  "name": "_bg",
-                                  "type": "string"
-                                }
-                              ],
-                              "name": "set",
-                              "outputs": [],
-                              "payable": false,
-                              "stateMutability": "nonpayable",
-                              "type": "function"
-                            },
-                            {
-                              "constant": true,
-                              "inputs": [],
-                              "name": "get",
-                              "outputs": [
-                                {
-                                  "internalType": "string",
-                                  "name": "",
-                                  "type": "string"
-                                },
-                                {
-                                  "internalType": "uint256",
-                                  "name": "",
-                                  "type": "uint256"
-                                },
-                                {
-                                  "internalType": "string",
-                                  "name": "",
-                                  "type": "string"
-                                },
-                                {
-                                  "internalType": "string",
-                                  "name": "",
-                                  "type": "string"
-                                }
-                              ],
-                              "payable": false,
-                              "stateMutability": "view",
-                              "type": "function"
-                            },
-                            {
-                              "constant": true,
-                              "inputs": [],
-                              "name": "patientCount",
-                              "outputs": [
-                                {
-                                  "internalType": "uint256",
-                                  "name": "",
-                                  "type": "uint256"
-                                }
-                              ],
-                              "payable": false,
-                              "stateMutability": "view",
-                              "type": "function"
-                            }
-                          ]
-;                 var address='0xBb64c1467f4F2d470046E5d580ac835045D9fc44';
-                      if (typeof web3 !== undefined) 
-                      {
-                        web3 = new Web3(web3.currentProvider);
-                      } 
-                      else
-                      {
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "i",
+				"type": "uint256"
+			}
+		],
+		"name": "getall",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_patientCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "info",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "bg",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "get",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			}
+		],
+		"name": "set",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "patientCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+                       var net_address='0xb495cA57289c0307635c4E83A97C795E82221a31';
+                     
                         web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
-                      }                      
-                      var Courses = new web3.eth.Contract(abi,address);
-                      // console.log(Courses.methods);
-                      Courses.methods.get().call().then(function(number){
-                      // console.log(number)
-                      var result=number;
-                      document.getElementById("print").innerHTML=result[0]+"("+result[1]+" years old) is "+result[2]+"with blood group "+result[3];
-                     });
+                                        
+                      var Courses = new web3.eth.Contract(abi,net_address);
+                      
+                    //   Courses.methods.get().call().then(function(number){
+                    //   console.log(number)
+                    //   var result=number;
+                    //   var total=result[4];
+                    //   document.getElementById("print").innerHTML=result[0]+"("+result[1]+" years old) is "+result[2]+" with blood group "+result[3] + result[4];
+                    //  });
+
+                    //****************************************// 
+                    //  var i;
+                    //   for(i=1;i<=4;i++)
+                    //   {
+                    //     let tableRef = document.getElementById("print");
+                    //     let newRow = tableRef.insertRow(-1);
+                    //     let newCell = newRow.insertCell(0);
+                    //     let newText = document.createTextNode
+
+
+                    //     Courses.methods.getall(i).call().then(function(no){
+                    //       console.log(no)
+                    //       x=(no["0"]+"("+no[1]+" years old) is "+no[2]+" with blood group "+no[3]).toString();
+                    //       let p=document.createTextNode(x);
+                    //       newCell.appendChild(p);
+                    //   }); }
+                    // ************************************//
                     </script>
     </body>
 </html>

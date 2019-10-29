@@ -1,0 +1,367 @@
+<html>
+        <head>
+           
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+                <!-- <script src="node_modules/web3/dist/web3.min.js" type="text/javascript"></script>
+                <script src="node_modules/truffle-contract/dist/truffle-contract.js" type="text/javascript"></script> -->
+                <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.37/dist/web3.min.js"></script>
+                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+                <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+            <title></title>
+            <meta charset="utf-8" />
+            
+        </head>
+    <body>
+        <h1>Your Bio</h1>
+
+        <h4  style="padding: 30px; display: inline-block"> Name : </h4><h4 id="name" style="padding: 30px; display: inline-block"></h4><br>
+        <h4  style="padding: 30px; display: inline-block"> Age : </h4><h4 id="age"style="padding: 30px; display: inline-block"></h4><br>
+        <h4  style="padding: 30px; display: inline-block"> Gender : </h4><h4 id="gender" style="padding: 30px; display: inline-block"></h4><br>
+        <h4  style="padding: 30px; display: inline-block"> Blood Group : </h4><h4 id="bg" style="padding: 30px; display: inline-block"></h4><br>
+        <button id="button" onclick="getdoctors()" class="btn btn-primary">Search Doctor for medication</button> 
+        <h4><table id="print" style="padding: 30px"></h4>
+        <script>
+                       var abi=[
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "i",
+				"type": "uint256"
+			}
+		],
+		"name": "getall",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_patientCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "info",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "bg",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "get",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			}
+		],
+		"name": "set",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "patientCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+                       var net_address='0xb495cA57289c0307635c4E83A97C795E82221a31';
+                     
+                        web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+                                        
+                      var Courses = new web3.eth.Contract(abi,net_address);
+                      
+                      Courses.methods.get().call().then(function(number){
+                      console.log(number)
+                      var result=number;
+                      var total=result[4];
+                      document.getElementById("name").innerHTML=result[0]
+                      document.getElementById("age").innerHTML=result[1]
+                      document.getElementById("gender").innerHTML=result[2]
+                      document.getElementById("bg").innerHTML=result[3] 
+                      })
+
+           function getdoctors(){
+               try{
+                var d_abi=[
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "i",
+				"type": "uint256"
+			}
+		],
+		"name": "getall",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_doctorCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "info",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "gender",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "get",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "doctorCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			}
+		],
+		"name": "set",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+];         
+            var d_address='0xD427337b4e7eCf8F6D1F0380D00449543aD6C7d5';
+            web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+            var Doctors = new web3.eth.Contract(d_abi,d_address);
+              var i;
+                      for(i=1;i<=4;i++)
+                      {
+                        let tableRef = document.getElementById("print");
+                        let newRow = tableRef.insertRow(-1);
+                        let newCell = newRow.insertCell(0);
+                        let newText = document.createTextNode
+
+
+                        Doctors.methods.getall(i).call().then(function(no){
+                          console.log(no)
+                          x=(no["0"]+"("+no[1]+" years old) is "+no[2]).toString();
+                          let p=document.createTextNode(x);
+                          newCell.appendChild(p);
+                      }); }
+               }catch(err){
+                        document.getElementById("print").innerHTML = err;
+               }
+           }
+        </script>
+    </body>
+</html>
