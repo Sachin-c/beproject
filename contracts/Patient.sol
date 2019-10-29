@@ -6,6 +6,7 @@ contract Patient{
     uint age;
     string gender;
     string bg;
+
     function set(string memory _name, uint _age, string memory _gender,string memory _bg) public {
         patientCount++;
         name = _name;
