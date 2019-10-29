@@ -5,9 +5,20 @@ contract Patient{
     string name;
     uint age;
     string gender;
+<<<<<<< HEAD
     string bg;
 
     function set(string memory _name, uint _age, string memory _gender,string memory _bg) public {
+=======
+//    modifier checkLevel(uint _age){
+//        require(
+//            _age>0,
+//            "Invalid age"
+//            );
+//            _;
+//    }
+    function set(string memory _name, uint _age, string memory _gender) public {
+>>>>>>> 14a7dbb3736b1045ace91ead443f4160122f4418
         patientCount++;
         name = _name;
         age = _age;
