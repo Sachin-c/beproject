@@ -2,20 +2,17 @@
         <head>
            
                 <meta name="viewport" content="width=device-width, initial-scale=1">
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-				<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-                <!-- <script src="node_modules/web3/dist/web3.min.js" type="text/javascript"></script>
-                <script src="node_modules/truffle-contract/dist/truffle-contract.js" type="text/javascript"></script> -->
-                <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.37/dist/web3.min.js"></script>
-                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-				<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-				<script src="require.js"></script>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+            <!-- <script src="node_modules/web3/dist/web3.min.js" type="text/javascript"></script>
+            <script src="node_modules/truffle-contract/dist/truffle-contract.js" type="text/javascript"></script> -->
+            <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.37/dist/web3.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+            <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
             <title></title>
             <meta charset="utf-8" />
-			<style type="text/css">
+            <style type="text/css">
 				section {
 					width: 100%;		
 				}
@@ -29,350 +26,67 @@
 				}
 			</style>
         </head>
-    <body><table id="wheel" style="float: right;"></table>
-        <h1>Your Bio</h1>
-        <h4  style="padding: 30px; display: inline-block"> Name : </h4><h4 id="name" style="padding: 30px; display: inline-block"></h4><br>
-        <h4  style="padding: 30px; display: inline-block"> Age : </h4><h4 id="age"style="padding: 30px; display: inline-block"></h4><br>
-        <h4  style="padding: 30px; display: inline-block"> Gender : </h4><h4 id="gender" style="padding: 30px; display: inline-block"></h4><br>
-        <h4  style="padding: 30px; display: inline-block"> Blood Group : </h4><h4 id="bg" style="padding: 30px; display: inline-block"></h4><br>
-		<button id="button" onclick="getdoctors()" class="btn btn-primary">Search Doctor for medication</button> 
-		<button id="button" onclick="gethistory()" class="btn btn-primary">See History</button> 
-		
-		<section class="container" >
-			<div class="left-half">
-				<table id="print" style="padding: 30px"></table>
-				
-			</div>
-			<div class="right-half" id="myList">
-			</div>
-		</section>
-        <script>
-//*******************************************Patient ABI ******************************************//
-                       var abi=[
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_dname",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_medicine",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_sdate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_edate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_nof",
-				"type": "string"
-			}
-		],
-		"name": "addDoc",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_gender",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_bg",
-				"type": "string"
-			}
-		],
-		"name": "set",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "get",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_gender",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_bg",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "i",
-				"type": "uint256"
-			}
-		],
-		"name": "getall",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_gender",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_bg",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_patientCount",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "hCount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "history",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "dname",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "medicine",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "sdate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "edate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "nof",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "info",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "gender",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "bg",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "patientCount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "i",
-				"type": "uint256"
-			}
-		],
-		"name": "viewHist",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "_dname",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_medicine",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_sdate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_edate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_nof",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_hCount",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	}
-];
-						
+        <body>
+                <section class="container" >
+                        <div class="left-half">
+                    
+            <h1>Your Patients Request will be shown below </h1>
+            <h4 id="print" style="border: 20px; padding: 20px;"></h4>
+            <div id="form">
+            <form id="form1">
+                    <p class="text-danger" id="error"></p>
+                    <div class="form-group">
+                            <label for="Medicine">Medicine</label>
+                            <input type="med" class="form-control" id="medicine" placeholder="Medicine Name">
+                          </div>
+                    <div class="form-group"> 
+                            <label for="type">Medicine Type</label>
+                        <select  name="type" class="form-control" data-toggle="dropdown">
+                            <option value="Liquid"selected>Liquid</option>
+                            <option value="Tablet">Tablet</option>
+                            <option value="Capsule">Capsule</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" data-provide="datepicker">
+                            <label for="Start Date">Start Date</label>
+                            <input type="date" name="bday">  
+                    </div>
+                    <div class="form-group" data-provide="datepicker">
+                        <label for="Start Date">End Date</label>
+                        <input type="date" name="bday">  
+                    </div>
 
+                    <div class="form-group"> 
+                            <label for="type">Number of times a day </label>
+                        <select  name="numberof" class="form-control" data-toggle="dropdown">
+                            <option value="1"selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
 
-						var net_address='0x89d9117643f684A2A6381Fdb9C73bCaA500d647a';
-                        web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));                                    
-                      var Courses = new web3.eth.Contract(abi,net_address);                      
-                      Courses.methods.get().call().then(function(number){
-                      console.log(number)
-                      var result=number;
-                      var total=result[4];
-                      document.getElementById("name").innerHTML=result[0]
-                      document.getElementById("age").innerHTML=result[1]
-                      document.getElementById("gender").innerHTML=result[2]
-                      document.getElementById("bg").innerHTML=result[3] 
-                      })
-           function getdoctors(){
-               try{
-				// let fs = require('fs');
-				// console.log(fs);
-				// const contract = JSON.parse(fs.readFileSync('./build/contracts/Doctor.json', 'utf8'));
-				// console.log(JSON.stringify(contract.abi));
-				
-//*******************************************Doctor ABI*******************************************//
-                var d_abi=[
+                        </select>
+                    </div>
+                </form>
+                <button id="button" onclick="setvalue();setpatient();" class="btn btn-primary">Submit</button>       
+            </div>
+            <button id="button" onclick="getvalue();" class="btn btn-primary">History</button>  
+            </div>
+            <div class="right-half" >
+                    <table id="wheel"></table>
+            </div>
+             </section>
+                
+            <script>
+                    
+                     web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+//*****************************************Doctor ABI *************************************//
+                      var abi=[
 	{
 		"constant": false,
 		"inputs": [
@@ -800,817 +514,1683 @@
 	}
 ];
 
+                    var address='0x007Ba2F53Cd43B5F3ee72086Af572cE7b1d72b41';
 
-			var d_address='0x007Ba2F53Cd43B5F3ee72086Af572cE7b1d72b41';
-            web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
-            var Doctors = new web3.eth.Contract(d_abi,d_address);
-			var i=1;
+                    var Courses = new web3.eth.Contract(abi,address);
+                    
+                    Courses.methods.getP().call().then(function(number){
+                    if (number[0]!=""){
+                        document.getElementById("form").style.display="block";     
+                        }
+                        else{
+                            document.getElementById("form").style.display="none";     
+                    }
+                    // console.log(number[0])
+                    var result=number;
+                    var total=result[4];
+                    if(number[0]==""){
+                        document.getElementById("print").innerHTML="No requests yet";
+                    }
+                    else{
+                    document.getElementById("print").innerHTML=result[0]+"("+result[1]+" years old) is "+result[2]+" with blood group "+result[3] ;}
+                    });
+                    function setvalue(){
+                        web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+//***********************************Doctor ABI ***************************************//
+                    var abi=[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			}
+		],
+		"name": "set",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "setAddressB",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_p_id",
+				"type": "uint256"
+			}
+		],
+		"name": "setP",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_medname",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_medtype",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_sdate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_edate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_nof",
+				"type": "string"
+			}
+		],
+		"name": "WriteMedication",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "doctorCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "get",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "i",
+				"type": "uint256"
+			}
+		],
+		"name": "getall",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_doctorCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "GetMedicationList",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_medname",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_medtype",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_sdate",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_edate",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_nof",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_treatCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getP",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_patientCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "info",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "gender",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "p_id",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "patientlist",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "pid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "bg",
+				"type": "string"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "medname",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "medtype",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "sdate",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "edate",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "nof",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "source",
+				"type": "string"
+			}
+		],
+		"name": "stringToBytes32",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "result",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "treatCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+                    var address='0x007Ba2F53Cd43B5F3ee72086Af572cE7b1d72b41';
+                    var Courses = new web3.eth.Contract(abi,address);
+                        Courses.methods.getP().call().then(function(number){
+                            var name=number[0];
+                            var age=number[1];
+                            var gender=number[2];
+                            var bg=number[3];
+                            var med=document.getElementById("form1").elements[0].value;
+                            var type=document.getElementById("form1").elements[1].value;
+                            var sdate=document.getElementById("form1").elements[2].value;
+                            var edate=document.getElementById("form1").elements[3].value;
+                            var nop=document.getElementById("form1").elements[4].value;
+                    Courses.methods.WriteMedication(name,age,gender,bg,med,type,sdate,edate,nop).send({from:'0x2823659f9FD99f95B44bc4C0A808eebcA069F690',gas: 3000000}, function (error, result){
+                    console.log(number);
+                    });
+                    });
+                 }
+                 function getvalue(){
+                    web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+//*******************************************Doctor ABI ****************************************//
+                    var abi=[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			}
+		],
+		"name": "set",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "setAddressB",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_p_id",
+				"type": "uint256"
+			}
+		],
+		"name": "setP",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_medname",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_medtype",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_sdate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_edate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_nof",
+				"type": "string"
+			}
+		],
+		"name": "WriteMedication",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "doctorCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "get",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "i",
+				"type": "uint256"
+			}
+		],
+		"name": "getall",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_doctorCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "GetMedicationList",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_medname",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_medtype",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_sdate",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_edate",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_nof",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_treatCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getP",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_patientCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "info",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "gender",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "p_id",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "patientlist",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "pid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "bg",
+				"type": "string"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "medname",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "medtype",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "sdate",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "edate",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "nof",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "source",
+				"type": "string"
+			}
+		],
+		"name": "stringToBytes32",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "result",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "treatCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+
+                    var address='0x007Ba2F53Cd43B5F3ee72086Af572cE7b1d72b41';
+                    var Doctors = new web3.eth.Contract(abi,address);
+                    var i=1;
 			var list, li, index;
 			list = document.getElementById('listed');
-                        Doctors.methods.getall(i).call().then(function(no){
+                        Doctors.methods.GetMedicationList(i).call().then(function(no){
 						console.log(no);
-					for(i=1;i<=no[3];i++)
+					for(i=1;i<=no[6];i++)
                     {	
-						Doctors.methods.getall(i).call().then(function(no){
-                        let tableRef = document.getElementById("print");
-                        let newRow = tableRef.insertRow(-1);
-                        let newCell = newRow.insertCell(0);
-                        let newText = document.createTextNode
-						newCell.setAttribute("style","padding: 26px; display: inline-block; text-align: center")
-						
-						  x=(no[0]+"("+no[1]+" years old) is "+no[2]).toString();
-						  
-						  let p=document.createTextNode(x);
-						
-						  newCell.appendChild(p);})
-			   }
-			   list = document.getElementById('myList');
-			   for (index = 1; index <=no[3]; ++index) {
-						li = document.createElement('button');
-						li.setAttribute("onClick","selecting(this.id)" );
-						li.setAttribute("style","display: inline-block; margin :16px")
-						li.setAttribute("class","btn btn-primary")		
-						li.id = index
-						li.innerHTML="Select"
-						list.appendChild(li);
-						var br = document.createElement("br");
-						list.appendChild(br);
-					}	
-			});
-               }catch(err){
-                        document.getElementById("print").innerHTML = err;
-               }
-		   }
-		   
-		   function selecting(u)
-		   {
-//***************************************  Doctor ABI ***************************************************//
-			var d_abi=[
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_gender",
-				"type": "string"
-			}
-		],
-		"name": "set",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "setAddressB",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_p_id",
-				"type": "uint256"
-			}
-		],
-		"name": "setP",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_gender",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_bg",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_medname",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_medtype",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_sdate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_edate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_nof",
-				"type": "string"
-			}
-		],
-		"name": "WriteMedication",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "doctorCount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "get",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_gender",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "i",
-				"type": "uint256"
-			}
-		],
-		"name": "getall",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_gender",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_doctorCount",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			}
-		],
-		"name": "GetMedicationList",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "_medname",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "_medtype",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "_sdate",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "_edate",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "_nof",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_treatCount",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getP",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_gender",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_bg",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_patientCount",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "info",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "gender",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "p_id",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "patientlist",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "pid",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "gender",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "bg",
-				"type": "string"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "medname",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "medtype",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "sdate",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "edate",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "nof",
-				"type": "bytes32"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "source",
-				"type": "string"
-			}
-		],
-		"name": "stringToBytes32",
-		"outputs": [
-			{
-				"internalType": "bytes32",
-				"name": "result",
-				"type": "bytes32"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "treatCount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	}
-];
-
-
-			var d_address='0x007Ba2F53Cd43B5F3ee72086Af572cE7b1d72b41';
-			web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
-            var Doctors = new web3.eth.Contract(d_abi,d_address);
-			Doctors.methods.setP(u).send({from:'0x2823659f9FD99f95B44bc4C0A808eebcA069F690',gas: 3000000}, function (error, result) {
-                    console.log(u);
-                    });
-		   }
-		   function gethistory()
-		   {
-//*********************************************Patient ABI ******************************************//
-						var abi=[
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_dname",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_medicine",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_sdate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_edate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_nof",
-				"type": "string"
-			}
-		],
-		"name": "addDoc",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_gender",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_bg",
-				"type": "string"
-			}
-		],
-		"name": "set",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "get",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_gender",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_bg",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "i",
-				"type": "uint256"
-			}
-		],
-		"name": "getall",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_gender",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_bg",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_patientCount",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "hCount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "history",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "dname",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "medicine",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "sdate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "edate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "nof",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "info",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "age",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "gender",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "bg",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "patientCount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "i",
-				"type": "uint256"
-			}
-		],
-		"name": "viewHist",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "_dname",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_medicine",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_sdate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_edate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_nof",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_hCount",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	}
-];
-						
-
-
-
-						var net_address='0x89d9117643f684A2A6381Fdb9C73bCaA500d647a';
-                        web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));                                    
-					  var Courses = new web3.eth.Contract(abi,net_address);
-					  var i=1;
-						var list, li, index;
-                        Courses.methods.viewHist(i).call().then(function(no){
-						console.log(no);
-					for(i=1;i<=1;i++)
-                    {	
-						Courses.methods.viewHist(i).call().then(function(no){
+						Doctors.methods.GetMedicationList(i).call().then(function(no){
                         let tableRef = document.getElementById("wheel");
                         let newRow = tableRef.insertRow(-1);
                         let newCell = newRow.insertCell(0);
                         let newText = document.createTextNode
-						newCell.setAttribute("style","padding: 26px; display: inline-block; text-align: center")			
-						  x=(no[0]+" was prescribed to have "+no[1]+" from  "+no[2]+" to "+no[3]+" "+no[4]+"times a day").toString();
-						  let p=document.createTextNode(x);		
+                        
+						newCell.setAttribute("style","padding: 26px; display: inline-block; text-align: center")
+						
+						  x=(no[0]+" was prescribed "+web3.utils.toAscii(no[1])+" as "+web3.utils.toAscii(no[2])+" from  "+ web3.utils.toAscii(no[3])+" to "+web3.utils.toAscii(no[4])+" and "+web3.utils.toAscii(no[5])+ " times a day.").toString();
+						  
+						  let p=document.createTextNode(x);
+						
 						  newCell.appendChild(p);})
-			   }
-			});
-					        
-		   }
-        </script>
-    </body>
+			   }});
+                 }
+                 function setpatient(){
+//*******************************************Doctor ABI ****************************************//
+                    var abi=[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			}
+		],
+		"name": "set",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "setAddressB",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_p_id",
+				"type": "uint256"
+			}
+		],
+		"name": "setP",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_medname",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_medtype",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_sdate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_edate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_nof",
+				"type": "string"
+			}
+		],
+		"name": "WriteMedication",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "doctorCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "get",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "i",
+				"type": "uint256"
+			}
+		],
+		"name": "getall",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_doctorCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "GetMedicationList",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_medname",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_medtype",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_sdate",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_edate",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_nof",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_treatCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getP",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_patientCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "info",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "gender",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "p_id",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "patientlist",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "pid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "bg",
+				"type": "string"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "medname",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "medtype",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "sdate",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "edate",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "nof",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "source",
+				"type": "string"
+			}
+		],
+		"name": "stringToBytes32",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "result",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "treatCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+                    
+
+                    
+                    web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+                    var address='0x007Ba2F53Cd43B5F3ee72086Af572cE7b1d72b41';
+                    var Doctors = new web3.eth.Contract(abi,address);
+                    Courses.methods.getP().call().then(function(number){
+//*******************************************Patient ABI ***************++++++++++++++++++++++++++//
+                     var abi=[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_dname",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_medicine",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_sdate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_edate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_nof",
+				"type": "string"
+			}
+		],
+		"name": "addDoc",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			}
+		],
+		"name": "set",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "get",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "i",
+				"type": "uint256"
+			}
+		],
+		"name": "getall",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_bg",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_patientCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "hCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "history",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "dname",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "medicine",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "sdate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "edate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "nof",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "info",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "gender",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "bg",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "patientCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "i",
+				"type": "uint256"
+			}
+		],
+		"name": "viewHist",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_dname",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_medicine",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_sdate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_edate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_nof",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_hCount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+                        
+
+                            console.log(number[0]);
+                        var net_address='0x89d9117643f684A2A6381Fdb9C73bCaA500d647a';
+                        web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));                                    
+                      var Courses = new web3.eth.Contract(abi,net_address);
+                      var med=document.getElementById("form1").elements[0].value;
+                      var type=document.getElementById("form1").elements[1].value;
+                      var sdate=document.getElementById("form1").elements[2].value;
+                      var edate=document.getElementById("form1").elements[3].value;
+                      var nop=document.getElementById("form1").elements[4].value;
+                      Courses.methods.addDoc(number[0],med,sdate,edate,nop).send({from:'0x2823659f9FD99f95B44bc4C0A808eebcA069F690',gas: 3000000}, function (error, result) {
+                        
+                      });
+                    });
+
+                 }
+            </script>
+        </body>
 </html>
