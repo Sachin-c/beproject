@@ -1871,7 +1871,7 @@
                     web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
                     var address='0x007Ba2F53Cd43B5F3ee72086Af572cE7b1d72b41';
                     var Doctors = new web3.eth.Contract(abi,address);
-                    Courses.methods.getP().call().then(function(number){
+                    Doctors.methods.get().call().then(function(number){
 //*******************************************Patient ABI ***************++++++++++++++++++++++++++//
                      var abi=[
 	{
@@ -2176,7 +2176,7 @@
 ];
                         
 
-                            console.log(number[0]);
+                        console.log(number[0]);
                         var net_address='0x89d9117643f684A2A6381Fdb9C73bCaA500d647a';
                         web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));                                    
                       var Courses = new web3.eth.Contract(abi,net_address);

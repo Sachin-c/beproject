@@ -1585,7 +1585,6 @@
 		"type": "function"
 	}
 ];
-						
 
 
 
@@ -1596,7 +1595,7 @@
 						var list, li, index;
                         Courses.methods.viewHist(i).call().then(function(no){
 						console.log(no);
-					for(i=1;i<=1;i++)
+					for(i=1;i<=no[5];i++)
                     {	
 						Courses.methods.viewHist(i).call().then(function(no){
                         let tableRef = document.getElementById("wheel");
@@ -1604,7 +1603,7 @@
                         let newCell = newRow.insertCell(0);
                         let newText = document.createTextNode
 						newCell.setAttribute("style","padding: 26px; display: inline-block; text-align: center")			
-						  x=(no[0]+" was prescribed to have "+no[1]+" from  "+no[2]+" to "+no[3]+" "+no[4]+"times a day").toString();
+						  x=(no[0]+"  prescribed to have "+no[1]+" from  "+no[2]+" to "+no[3]+" "+no[4]+"times a day").toString();
 						  let p=document.createTextNode(x);		
 						  newCell.appendChild(p);})
 			   }
