@@ -514,7 +514,7 @@
 	}
 ];
 
-                    var address='0x007Ba2F53Cd43B5F3ee72086Af572cE7b1d72b41';
+                    var address='0xEc3aB2F975B0c4cc1deD396c262bF4c04086fF86';
 
                     var Courses = new web3.eth.Contract(abi,address);
                     
@@ -964,7 +964,7 @@
 		"type": "function"
 	}
 ];
-                    var address='0x007Ba2F53Cd43B5F3ee72086Af572cE7b1d72b41';
+                    var address='0xEc3aB2F975B0c4cc1deD396c262bF4c04086fF86';
                     var Courses = new web3.eth.Contract(abi,address);
                         Courses.methods.getP().call().then(function(number){
                             var name=number[0];
@@ -1412,7 +1412,7 @@
 	}
 ];
 
-                    var address='0x007Ba2F53Cd43B5F3ee72086Af572cE7b1d72b41';
+                    var address='0xEc3aB2F975B0c4cc1deD396c262bF4c04086fF86';
                     var Doctors = new web3.eth.Contract(abi,address);
                     var i=1;
 			var list, li, index;
@@ -1869,7 +1869,7 @@
 
                     
                     web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
-                    var address='0x007Ba2F53Cd43B5F3ee72086Af572cE7b1d72b41';
+                    var address='0xEc3aB2F975B0c4cc1deD396c262bF4c04086fF86';
                     var Doctors = new web3.eth.Contract(abi,address);
                     Doctors.methods.get().call().then(function(number){
 //*******************************************Patient ABI ***************++++++++++++++++++++++++++//
@@ -2177,7 +2177,7 @@
                         
 
                         console.log(number[0]);
-                        var net_address='0x89d9117643f684A2A6381Fdb9C73bCaA500d647a';
+                        var net_address='0x591af41279Fa3fA9A81451D3404037540DDc3CCE';
                         web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));                                    
                       var Courses = new web3.eth.Contract(abi,net_address);
                       var med=document.getElementById("form1").elements[0].value;

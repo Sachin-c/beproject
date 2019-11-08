@@ -352,7 +352,7 @@
 						
 
 
-						var net_address='0x89d9117643f684A2A6381Fdb9C73bCaA500d647a';
+						var net_address='0x591af41279Fa3fA9A81451D3404037540DDc3CCE';
                         web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));                                    
                       var Courses = new web3.eth.Contract(abi,net_address);                      
                       Courses.methods.get().call().then(function(number){
@@ -801,7 +801,7 @@
 ];
 
 
-			var d_address='0x007Ba2F53Cd43B5F3ee72086Af572cE7b1d72b41';
+			var d_address='0xEc3aB2F975B0c4cc1deD396c262bF4c04086fF86';
             web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
             var Doctors = new web3.eth.Contract(d_abi,d_address);
 			var i=1;
@@ -1274,7 +1274,7 @@
 ];
 
 
-			var d_address='0x007Ba2F53Cd43B5F3ee72086Af572cE7b1d72b41';
+			var d_address='0xEc3aB2F975B0c4cc1deD396c262bF4c04086fF86';
 			web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
             var Doctors = new web3.eth.Contract(d_abi,d_address);
 			Doctors.methods.setP(u).send({from:'0x2823659f9FD99f95B44bc4C0A808eebcA069F690',gas: 3000000}, function (error, result) {
@@ -1588,7 +1588,7 @@
 
 
 
-						var net_address='0x89d9117643f684A2A6381Fdb9C73bCaA500d647a';
+						var net_address='0x591af41279Fa3fA9A81451D3404037540DDc3CCE';
                         web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));                                    
 					  var Courses = new web3.eth.Contract(abi,net_address);
 					  var i=1;

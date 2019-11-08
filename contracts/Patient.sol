@@ -1,53 +1,42 @@
+
 pragma solidity ^0.5.0;
 
 contract Patient{
     uint public patientCount = 0;
+    uint public hCount=0;
+    mapping(uint => Info) public info;
+    mapping(uint => History) public history;
+    struct Info{
+    uint id;
     string name;
     uint age;
     string gender;
     string bg;
-
+    }
+    struct History{
+        uint id;
+        string dname;
+        string medicine;
+        string sdate;
+        string edate;
+        string nof;
+    }
+    function addDoc(string memory _dname,string memory _medicine, string memory _sdate, string memory _edate, string memory _nof ) public{
+        hCount++;
+        history[hCount]=History(hCount,_dname,_medicine,_sdate,_edate,_nof);
+    }
+    function viewHist(uint i) public view returns(string memory _dname,string memory _medicine, string memory _sdate, string memory _edate, string memory _nof,uint _hCount){
+        return(history[i].dname,history[i].medicine,history[i].sdate,history[i].edate,history[i].nof,hCount);
+    }
     function set(string memory _name, uint _age, string memory _gender,string memory _bg) public {
         patientCount++;
-        name = _name;
-        age = _age;
-        gender = _gender;
-        bg = _bg;
-        // patients[msg.sender].name=_name;
+        info[patientCount] = Info(patientCount, _name,_age,_gender,_bg);
+        
     }
-    function get() public view returns(string memory, uint, string memory,string memory){
-    return (name, age, gender,bg) ;
+    function get() public view returns(string memory _name, uint _age, string memory _gender, string memory _bg){
+    return (info[patientCount].name, info[patientCount].age, info[patientCount].gender,info[patientCount].bg) ;
+    }
+    function getall(uint i) public view returns(string memory _name, uint _age, string memory _gender, string memory _bg,uint _patientCount){
+        return (info[i].name, info[i].age, info[i].gender,info[i].bg,patientCount); 
     }
 }
-
-// pragma solidity ^0.5.0;
-
-// contract Patient{
-//     uint public patientCount = 0;
-//     mapping(uint => Info) public info;
-//     struct Info{
-//     uint id;
-//     string name;
-//     uint age;
-//     string gender;
-//     }
-// //    modifier checkLevel(uint _age){
-// //        require(
-// //            _age>0,
-// //            "Invalid age"
-// //            );
-// //            _;
-// //    }
-//     function set(string memory _name, uint _age, string memory _gender) public {
-//         patientCount++;
-//         info[patientCount] = Info(patientCount, _name,_age,_gender);
-//         // id=_id;
-//         // name = _name;
-//         // age = _age;
-//         // gender = _gender;
-//         // patients[msg.sender].name=_name;
-//     }
-//     function get() public view returns(string memory _name, uint _age, string memory _gender){
-//     return (info[patientCount].name, info[patientCount].age, info[patientCount].gender) ;
-//     }
-// }
